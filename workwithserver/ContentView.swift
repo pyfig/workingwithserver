@@ -26,34 +26,31 @@ struct AnotherDetailView: View {
         }
     }
 struct AllPostView: View {
-@State var posts: [AllPost] = []
-var body: some View {
-    VStack{
-        List(self.posts, id: \.self) { item in
-            HStack {
-                Text("UserId: \(posts.userId)")
-                Text("Id: \(posts.id)")
-                Text("Title: \(posts.title??, "")")
-                Text("Body: \(posts.body??, "")")
+    @State var posts: [AllPost] = []
+    var body: some View {
+        VStack{
+            List(self.posts, id: \.self) { item in
+                HStack {
+                    Text("UserId: \(item.userId)")
+                    Text("Id: \(item.id)")
+                    Text("Title: \(item.title)")
+                    Text("Body: \(item.body)")
+                }
             }
-        }
-
-        Button("Получить данные с сервера"){
-            AF
-                .request("https://jsonplaceholder.typicode.com/posts")
-                .responseDecodable(of: [AllPost].self){response in
-                    if response.value != nil {
-                        self.posts = response.value!
-                    }//if
-                }//responseDecodable
-        }//Button
-    }//VStack
-}
-    struct ContentView_Previews: PreviewProvider {
-        static var previews: some View {
-            ContentView()
-        }
+            
+            Button("Получить данные с сервера"){
+                AF
+                    .request("https://jsonplaceholder.typicode.com/posts")
+                    .responseDecodable(of: [AllPost].self){response in
+                        if response.value != nil {
+                            self.posts = response.value!
+                        }//if
+                    }//responseDecodable
+            }//Button
+        }//VStack
     }
+}
+ 
 //struct DetailView: View {
 //    var body: some View {
 //        NavigationView {

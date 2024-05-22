@@ -8,6 +8,9 @@ struct ContentView: View {
             List {
                 NavigationLink(destination: AllPostView()) {
                     Text("Список постов")
+                        .onAppear {
+                            
+                        }
                 }
                 
                 NavigationLink(destination: OnePostView()) {

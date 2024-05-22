@@ -4,13 +4,13 @@ import Alamofire
 
 struct ContentView: View {
     var body: some View {
-        NavigationView { // Use NavigationView to enable navigation
+        NavigationView {
             List {
                 NavigationLink(destination: AllPostView()) {
                     Text("Список постов")
                 }
                 
-                NavigationLink(destination: AnotherDetailView()) {
+                NavigationLink(destination: OnePostView()) {
                     Text("Мой последний пост")
                 }
             }
@@ -18,13 +18,33 @@ struct ContentView: View {
         }
     }
 }
-struct AnotherDetailView: View {
-        var body: some View {
-            Text("Another Detail View")
-                .font(.title)
-                .padding()
+struct OnePostView: View {
+    @State var post: OnePost? = nil
+    var body: some View {
+        VStack{
+            if post != nil {
+                 HStack {
+                    Text("UserId: \(post!.userId)")
+                    Text("Id: \(post!.id)")
+                    Text("Title: \(post!.title)")
+                    Text("Body: \(post!.body)")
+                }
+            }
+            Button("Последний пост"){
+                AF
+                    .request("https://jsonplaceholder.typicode.com/posts/1")
+                    .responseDecodable(of: OnePost.self) {response in
+                        if response.value != nil {
+                            self.post = response.value
+                        }}
+            }
         }
     }
+}
+
+
+
+
 struct AllPostView: View {
     @State var posts: [AllPost] = []
     var body: some View {

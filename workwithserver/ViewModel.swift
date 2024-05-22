@@ -14,4 +14,10 @@ struct AllPost: Decodable,Hashable {
     let title: String
     let body: String
 }
+struct OnePost: Codable,Hashable{
+    let userId: Int
+    let id: Int
+    let title: String
+    let body: String
+}
 
